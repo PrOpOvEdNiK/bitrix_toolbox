@@ -1,0 +1,61 @@
+<style>
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #000;
+}
+</style>
+<table cellpadding="0" cellspacing="0" width="850" style="background-color: #d1d1d1; border-radius: 2px; border:1px solid #d1d1d1; margin: 0 auto;" border="1" bordercolor="#d1d1d1">
+    <tbody>
+        <tr>
+            <td height="83" width="850" bgcolor="#eaf3f5" style="border: none; padding-top: 23px; padding-right: 17px; padding-bottom: 24px; padding-left: 17px;">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tbody>
+                        <tr>
+                            <td bgcolor="#ffffff" height="75" style="font-weight: bold; text-align: center; font-size: 26px; color: #0b3961;">
+                                Заполнена web-форма: [#RS_FORM_ID#] #RS_FORM_NAME#
+                            </td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#bad3df" height="11">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td width="850" bgcolor="#f7f7f7" valign="top" style="border: none; padding-top: 0; padding-right: 44px; padding-bottom: 16px; padding-left: 44px;">
+                <p style="margin-top:30px; margin-bottom: 28px; font-weight: bold; font-size: 19px;">
+                    Пользователь сайта #SERVER_NAME# оставил заявку «<b>Узнать точную стоимость</b> — Конструктор / Калькулятор».
+                </p>
+                <p>Дата - #RS_DATE_CREATE#</p>
+                <p>Имя - #NAME#</p>
+                <p>Телефон - #PHONE#</p>
+                <p>E-mail - #EMAIL#</p>
+                <p>Город - #CITY_HIDDEN#</p>
+                <p>Комментарий пользователя - #COMMENT#</p>
+                <b>Состав:</b><br>
+                #COMPOSITION#<br>
+                <br>
+                <b>Подробный состав</b> (заполнен, в случае если пользователь отправляет заявку из <b>Калькулятора</b>):<br><br>
+                #TABLE# <br>
+                <br>
+                <b>Итоговая стоимость</b> (указана, в случае если пользователь отправляет заявку из <b>Калькулятора</b>):<br><b>#TOTAL# руб.</b>
+                <br>
+                <br>
+                <b>Ссылка на изображение:</b> #LAYOUT_RAW# <br>
+                <br>
+                <br>
+                <br>
+            </td>
+        </tr>
+        <tr>
+            <td height="40px" width="850" bgcolor="#f7f7f7" valign="top" style="border: none; padding-top: 0; padding-right: 44px; padding-bottom: 30px; padding-left: 44px;">
+                <p style="border-top: 1px solid #d1d1d1; margin-bottom: 5px; margin-top: 0; padding-top: 20px; line-height:21px;">
+                    Письмо сгенерировано автоматически.
+                </p>
+            </td>
+        </tr>
+    </tbody>
+</table>

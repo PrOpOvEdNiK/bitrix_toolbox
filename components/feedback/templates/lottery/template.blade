@@ -1,0 +1,98 @@
+<form id="{{ $arResult["TEMPLATE"] }}" class="feedback_form lottery_form" action="" method="POST"
+      enctype="multipart/form-data"
+      autocomplete="off">
+
+    {!! bitrix_sessid_post() !!}
+    <input type="hidden" name="PARAMS_HASH" value="{{ $arResult["PARAMS_HASH"] }}">
+    <input type="hidden" name="EMPTY" value=""/>
+    <input type="hidden" name="AJAX" value="Y"/>
+    <input type="hidden" name="TEMPLATE" value="{{ $arResult["TEMPLATE"] }}"/>
+    <input type="hidden" name="CURRENT_PAGE_URL" value=""/>
+    <input type="hidden" name="CURRENT_PAGE" value=""/>
+    <input type="hidden" name="FORM_TITLE" value=""/>
+
+    <div class="feedback_form__errors"></div>
+
+    <div class="lottery_form__content">
+        <div class="lottery_form__fields">
+            @foreach ($arResult["FIELDS"] as $fieldAlias => $fieldName)
+                @continue(in_array($fieldAlias, ['ANSWER_TEXT', 'ANSWER_GIFT']))
+                @php
+                    $require = '';
+                    if (in_array($fieldAlias, $arParams['REQUIRED_FIELDS'])) $require = 'require';
+                @endphp
+                <input type="text" class="feedback_form__input {{ $require }}" name="{{ $fieldAlias }}"
+                       placeholder="{{ $fieldName }}" value="" maxlength="40">
+            @endforeach
+
+            @if ($arResult['FIELDS']['ANSWER_TEXT'])
+                @php
+                    $require = '';
+                    if (in_array($fieldAlias, $arParams['REQUIRED_FIELDS'])) $require = 'require';
+                @endphp
+                <textarea class="feedback_form__input {{ $require }}" name="ANSWER_TEXT" style="resize: none;"
+                          placeholder="{{ $arResult['FIELDS']['ANSWER_TEXT'] }}"></textarea>
+            @endif
+
+            @if(count($arResult['GIFTS']))
+                <input id="lottery-gift-input" class="feedback_form__input require disabled" placeholder="Подарок"
+                       type="text" name="ANSWER_GIFT" value="" readonly/>
+            @endif
+        </div>
+
+        @if(count($arResult['GIFTS']))
+            <div class="lottery_form__gifts">
+                <h4 class="lottery_form__gifts__title">Выберите подарок</h4>
+                <div class="lottery_form__gifts__list">
+                    @foreach ($arResult["GIFTS"] as $arGift)
+                        <div class="lottery_form__gifts__item" title="{{$arGift['NAME']}}">
+                            <img src="{{$arGift['IMAGE_URL']}}" alt="{{$arGift['NAME']}}"
+                                 class="lottery_form__gifts__item__image"
+                            >
+                        </div>
+                    @endforeach
+                    <div class="lottery_form__gifts__item flex-fix"></div>
+                    <div class="lottery_form__gifts__item flex-fix"></div>
+                    <div class="lottery_form__gifts__item flex-fix"></div>
+                    <div class="lottery_form__gifts__item flex-fix"></div>
+                </div>
+            </div>
+        @endif
+    </div>
+
+
+    <div class="feedback_form__footer">
+        <div class="feedback_form__file" data-hash="{{ $arResult["PARAMS_HASH"] }}">
+            @if ($arResult['UPLOAD_FILE'])
+                <input type="file" class="feedback_form__file-input" name="ANSWER_FILE" value="">
+                <a href="#" class="{{ $arResult["PARAMS_HASH"] }}-button feedback_form__file-button">
+                    <i class="feedback_form__file-ico"></i>
+                    <span>{{ $arResult['UPLOAD_FILE'] }}</span>
+                </a>
+                <span class="{{ $arResult["PARAMS_HASH"] }}-filename feedback_form__file-filename"></span>
+                <span class="{{ $arResult["PARAMS_HASH"] }}-filesize feedback_form__file-filesize"></span>
+                <span class="{{ $arResult["PARAMS_HASH"] }}-remove feedback_form__file-remove">
+                    <i class="ion-close"></i>
+                </span>
+                <span class="{{ $arResult["PARAMS_HASH"] }}-error feedback_form__file-error"></span>
+            @endif
+        </div>
+
+        <div class="feedback_form__button">
+            <button id="goal-{{$arParams['EVENT_ALIAS']}}" type="submit" class="g-btn g-btn-rounded g-btn-red">
+                Отправить
+            </button>
+            <div class="feedback_form__legal">
+                <span class="legal_info-text">Нажимая на кнопку, вы
+                    соглашаетесь с
+                    <a href="/upload/iblock/8f1/Pravila-aktsii-V-mae-na-Altae_sayt-_1_.pdf" class="legal_info-link"
+                       target="_blank">правилами акции</a>
+                    и даете
+                    <a href="/personal-info/" class="legal_info-link"
+                       target="_blank">согласие на обработку персональных данных</a>
+                </span>
+            </div>
+        </div>
+    </div>
+
+</form>
