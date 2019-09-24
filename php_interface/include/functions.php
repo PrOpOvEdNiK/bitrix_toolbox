@@ -1,66 +1,5 @@
 <?php
 
-/**
- * Переделка битриксовой функции check_bitrix_sessid
- * @param $data array
- * @return bool
- */
-function vk_check_bitrix_sessid($data)
-{
-    return $data[SITE_SESSID] == bitrix_sessid();
-}
-
-function printra()
-{
-    global $APPLICATION;
-    if (is_object($APPLICATION) && IntVal($APPLICATION->buffered)) {
-        $APPLICATION->RestartBuffer();
-    }
-
-    $backtrace = debug_backtrace();
-    echo "<pre dddump>" . $backtrace[0]['file'] . " on line " . $backtrace[0]['line'] . "</pre>";
-
-    $arPrint = func_get_args();
-    if (count($arPrint) == 1) {
-        printr($arPrint[0]);
-    } else printr($arPrint);
-    die();
-}
-
-function printrau()
-{
-    if (isAdmin()) {
-        $backtrace = debug_backtrace();
-        echo "<pre dddump>" . $backtrace[0]['file'] . " on line " . $backtrace[0]['line'] . "</pre>";
-
-        $arPrint = func_get_args();
-        if (count($arPrint) == 1) {
-            printr($arPrint[0]);
-        } else printr($arPrint);
-    }
-}
-
-function printr()
-{
-    echo "<pre dddump>";
-    $arPrint = func_get_args();
-    if (count($arPrint) == 1) {
-        var_dump($arPrint[0]);
-    } else var_dump($arPrint);
-    echo "</pre>";
-}
-
-function clearTilda(&$arFoo)
-{
-    foreach ($arFoo as $sKey => &$fooValue) {
-        if (preg_match("#^~.*$#", $sKey)) unset($arFoo[$sKey]);
-        if (is_array($fooValue)) {
-            clearTilda($fooValue);
-        }
-    }
-    return $arFoo;
-}
-
 function startsWith($haystack, $needle)
 {
     return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== false;
@@ -713,4 +652,63 @@ function isAdmin()
 function cutAllButNumbers($string)
 {
     return (int)preg_replace("/[^0-9]/", "", $string);
+}
+
+/**
+ * @param string $string
+ * @param string $mode 7,8
+ * @param bool $clear
+ * @return string
+ */
+function getPhoneFromString($string, $mode, $clear = false)
+{
+    $string = preg_replace("/[^0-9]/", "", $string);
+    if (strlen($string) == 11) {
+        $string = substr($string, 1);
+    }
+    $phone = intval($string);
+    if ($clear) {
+        return $phone;
+    }
+
+    switch ($mode) {
+        case "7":
+            return "7{$phone}";
+        case "8":
+            return "8{$phone}";
+        default:
+            return "+7 ("
+                . substr($phone, 0, 3) . ") "
+                . substr($phone, 3, 3) . "-"
+                . substr($phone, 6, 2) . "-"
+                . substr($phone, 8, 2);
+    }
+}
+
+function pars($var, $die = true, $onlyAdmin = true)
+{
+    global $APPLICATION;
+    global $USER;
+
+    if ($onlyAdmin && !$USER->IsAdmin()) {
+        return false;
+    }
+    if ($die) {
+        $APPLICATION->RestartBuffer();
+    }
+
+    $backtrace = debug_backtrace();
+    echo '<pre>' . $backtrace[0]['file'] . ' on line ' . $backtrace[0]['line'] . '</pre>';
+    echo '<pre>';
+    var_dump($var);
+
+    if ($die) {
+        die("---END---");
+    }
+    return var_export($var, true);
+}
+
+function getSiteInfo($siteId = SITE_ID)
+{
+    return CSite::GetByID($siteId)->Fetch();
 }
