@@ -1,0 +1,35 @@
+.scrolltotop {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: blue;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 300ms;
+    position: fixed;
+    z-index: 10;
+    right: 50px;
+    bottom: 50px;
+    transform: scale(0);
+    opacity: 0;
+}
+
+.scrolltotop svg {
+    pointer-events: none;
+    width: 18px;
+    height: 12px;
+}
+
+.scrolltotop:hover {
+    opacity: 1 !important;
+    background-color: yellow;
+    transform: scale(1) translateY(-10px) !important;
+}
+
+.scrolltotop.show {
+    transform: scale(1);
+    opacity: 0.7;
+}
