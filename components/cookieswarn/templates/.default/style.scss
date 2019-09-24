@@ -1,0 +1,90 @@
+$mainCookieColor: #e3292e;
+$hoverCookieColor: #d01d23;
+
+.cookieswarn {
+    position: fixed;
+    bottom: -200px;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    opacity: 0;
+    padding-bottom: 0;
+    transition: bottom 500ms, opacity 200ms;
+    background: #fff;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
+    &.show {
+        bottom: 0;
+        opacity: 1;
+    }
+    &__wraper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 992px;
+        margin: 0 auto;
+        padding: 30px;
+    }
+    &-text {
+        color: #000;
+        flex-basis: 70%;
+        max-width: 70%;
+        font-size: 14px;
+        line-height: 1.1;
+    }
+    &-more {
+        flex-basis: 15%;
+        max-width: 15%;
+        text-align: center;
+        text-decoration: underline;
+        color: $mainCookieColor;
+        &:hover {
+            color: $hoverCookieColor;
+            text-decoration: none;
+        }
+    }
+    &-ok {
+        flex-basis: 15%;
+        max-width: 15%;
+        text-align: center;
+        text-decoration: none;
+        color: #fff;
+        background: $mainCookieColor;
+        line-height: 30px;
+        height: 30px;
+        border-radius: 30px;
+        padding-left: 15px;
+        padding-right: 15px;
+        &:hover {
+            background: $hoverCookieColor;
+            text-decoration: none;
+            color: #fff;
+        }
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .cookieswarn {
+        &__wraper {
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        &-text {
+            flex-basis: 100%;
+            max-width: none;
+            margin-bottom: 20px;
+        }
+        &-more {
+            flex-basis: auto;
+            max-width: none;
+            margin-right: 30px;
+        }
+        &-ok {
+            flex-basis: auto;
+            max-width: none;
+        }
+    }
+
+    .section-title {
+        padding-top: 60px;
+    }
+}
